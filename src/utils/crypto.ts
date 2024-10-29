@@ -1,3 +1,5 @@
+import { sign } from "hono/jwt";
+
 export const hashPasssword = async (password: string) =>
   Array.from(
     new Uint8Array(
@@ -6,3 +8,10 @@ export const hashPasssword = async (password: string) =>
   )
     .map((byte) => byte.toString(16))
     .join("");
+
+export const generateJwtToken = async (userId: number, secret: string) => {
+  return await sign(
+    { username: userId, exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 },
+    secret
+  );
+};

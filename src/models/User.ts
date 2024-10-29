@@ -1,10 +1,31 @@
 import { hashPasssword } from "../utils/crypto";
 
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  is_verified: boolean;
+  is_admin: boolean;
+  is_active: boolean;
+  created_at: string;
+}
+
+export async function findUserById(db: D1Database, id: number) {
+  return await db
+    .prepare(
+      "SELECT id, name, email, is_verified, is_admin, is_active, created_at FROM users WHERE id = ?"
+    )
+    .bind(id)
+    .first<User>();
+}
+
 export async function findUserByEmail(db: D1Database, email: string) {
   return await db
-    .prepare("SELECT * FROM users WHERE email = ?")
+    .prepare(
+      "SELECT id, name, email, is_verified, is_admin, is_active, created_at FROM users WHERE email = ?"
+    )
     .bind(email)
-    .first();
+    .first<User>();
 }
 
 export async function createUser(
@@ -23,16 +44,6 @@ export async function createUser(
     )
     .bind(user.name, user.email, hashedPassword)
     .run();
-}
-
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  is_verified: boolean;
-  is_admin: boolean;
-  is_active: boolean;
-  created_at: string;
 }
 
 export async function verifyUser(

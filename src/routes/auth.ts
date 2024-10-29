@@ -2,8 +2,10 @@ import { Hono } from "hono";
 import { createUser, findUserByEmail, verifyUser } from "../models/User";
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
+import { IEnv } from "../types";
+import { generateJwtToken } from "../utils/crypto";
 
-const authRoutes = new Hono<{ Bindings: Bindings }>();
+const authRoutes = new Hono<IEnv>();
 
 authRoutes.post(
   "/register",
@@ -26,9 +28,12 @@ authRoutes.post(
 
     let userId = result.meta.last_row_id;
 
+    const token = await generateJwtToken(userId, c.env.JWT_SECRET);
+
     return c.json({
       message: "User created successfully",
       userId,
+      token,
     });
   }
 );
@@ -51,7 +56,9 @@ authRoutes.post(
       return c.json({ message: "Invalid credentials" }, 401);
     }
 
-    return c.json({ message: "Login successful", user });
+    const token = await generateJwtToken(user.id, c.env.JWT_SECRET);
+
+    return c.json({ message: "Login successful", user, token });
   }
 );
 
