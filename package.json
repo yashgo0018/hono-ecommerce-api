@@ -1,0 +1,21 @@
+{
+  "name": "ecommerce-api",
+  "scripts": {
+    "dev": "tunnels wrangler dev --port 8080",
+    "deploy": "wrangler deploy --minify"
+  },
+  "cloudflared": {
+    "name": "testing",
+    "hostname": "testing.p2pmentorship.com",
+    "target": "http://localhost:8080"
+  },
+  "dependencies": {
+    "@hono/zod-validator": "^0.4.1",
+    "hono": "^4.6.8",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241022.0",
+    "wrangler": "^3.83.0"
+  }
+}

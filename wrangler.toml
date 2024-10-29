@@ -1,0 +1,27 @@
+name = "ecommerce-api"
+main = "src/index.ts"
+compatibility_date = "2024-10-29"
+compatibility_flags = [ "nodejs_compat" ]
+
+# [vars]
+# MY_VAR = "my-variable"
+
+# [[kv_namespaces]]
+# binding = "MY_KV_NAMESPACE"
+# id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+# [[r2_buckets]]
+# binding = "MY_BUCKET"
+# bucket_name = "my-bucket"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "hono-ecommerce-worker-d1"
+database_id = "c83bd1b1-5f40-44e2-b866-757c362ca3af"
+
+# [ai]
+# binding = "AI"
+
+# [observability]
+# enabled = true
+# head_sampling_rate = 1
