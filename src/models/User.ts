@@ -1,14 +1,5 @@
+import { User } from "../types";
 import { hashPasssword } from "../utils/crypto";
-
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  is_verified: boolean;
-  is_admin: boolean;
-  is_active: boolean;
-  created_at: string;
-}
 
 export async function findUserById(db: D1Database, id: number) {
   return await db
