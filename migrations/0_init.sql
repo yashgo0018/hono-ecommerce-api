@@ -27,7 +27,8 @@ CREATE TABLE IF NOT EXISTS carts (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
     is_active BOOLEAN DEFAULT TRUE,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(user_id) REFERENCES users(id)
 );
 
 CREATE TABLE IF NOT EXISTS cart_items (
@@ -36,7 +37,9 @@ CREATE TABLE IF NOT EXISTS cart_items (
     product_id INTEGER NOT NULL,
     quantity INTEGER NOT NULL,
     price_per_unit DECIMAL(10, 2) NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(cart_id) REFERENCES carts(id),
+    FOREIGN KEY(product_id) REFERENCES products(id)
 );
 
 CREATE TABLE IF NOT EXISTS orders (
@@ -45,5 +48,7 @@ CREATE TABLE IF NOT EXISTS orders (
     cart_id INTEGER NOT NULL,
     total_price DECIMAL(10, 2) NOT NULL,
     status TEXT NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(user_id) REFERENCES users(id),
+    FOREIGN KEY(cart_id) REFERENCES carts(id)
 );
